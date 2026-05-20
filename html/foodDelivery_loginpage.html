@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Page background */
+        body {
+            background-color: #000;
+            /* black */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Login container */
+        .login {
+            background-color: #fff;
+            /* white */
+            width: 360px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        }
+
+        /* Input group */
+        .login div {
+            margin-bottom: 15px;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Inputs */
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #000;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        /* Input focus */
+        input:focus {
+            border-color: #e60000;
+            /* red */
+        }
+
+        /* CAPTCHA box */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #000;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* CAPTCHA text */
+        #captchaText {
+            color: #ff0000;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        /* Refresh button */
+        .captcha-box button {
+            background-color: #ff0000;
+            border: none;
+            color: #fff;
+            padding: 6px 12px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .captcha-box button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* CAPTCHA input */
+        #captchaInput {
+            margin-top: 10px;
+        }
+
+        /* Error message */
+        #captchaError {
+            margin-top: 6px;
+            font-size: 13px;
+            color: #ff0000;
+        }
+
+        /* Submit button */
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #e60000;
+            /* red */
+            color: #fff;
+            /* white */
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover effect */
+        .submit-btn:hover {
+            background-color: #000;
+            /* black */
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+        }
+
+        /* Active (click) effect */
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+
+</head>
+
+<body>
+    <form onsubmit="return validateCaptcha()">
+
+        <script>
+            let captcha = "";
+
+            function generateCaptcha() {
+                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                captcha = "";
+                for (let i = 0; i < 6; i++) {
+                    captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                document.getElementById("captchaText").innerText = captcha;
+            }
+
+            function validateCaptcha() {
+                const userInput = document.getElementById("captchaInput").value;
+                if (userInput !== captcha) {
+                    document.getElementById("captchaError").innerText = "CAPTCHA does not match";
+                    return false;
+                }
+                return true;
+            }
+
+            generateCaptcha(); // auto generate on load
+        </script>
+
+        <div class="login">
+            <div class="name">
+                <label for="name">Name : </label>
+                <input id="name" type="text" placeholder="Enter your Name" required>
+            </div>
+
+            <div class="Mob_no">
+                <label for="mobile">Mobile No : </label>
+                <input id="mobile" type="number" placeholder="Enter your Mobile Number" required>
+            </div>
+
+            <div class="captcha-box">
+                <span id="captchaText"></span>
+                <button type="button" onclick="generateCaptcha()">↻</button>
+            </div>
+
+            <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+
+            <p id="captchaError"></p>
+
+            <div>
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
